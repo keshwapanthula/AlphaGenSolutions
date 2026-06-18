@@ -1,0 +1,29 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="a" x1="96" y1="112" x2="1104" y2="620" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6BE4D1" stop-opacity="0.75"/>
+      <stop offset="0.5" stop-color="#FFCC73" stop-opacity="0.65"/>
+      <stop offset="1" stop-color="#FF8C7A" stop-opacity="0.72"/>
+    </linearGradient>
+    <linearGradient id="b" x1="180" y1="178" x2="1020" y2="546" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="transparent"/>
+  <path d="M84 584C180 518 264 496 360 520C458 546 546 548 638 486C736 420 834 384 1036 300" stroke="url(#a)" stroke-width="18" stroke-linecap="round" stroke-dasharray="4 24"/>
+  <path d="M136 468C238 404 330 370 426 388C526 408 612 402 692 346C784 284 896 242 1080 176" stroke="url(#a)" stroke-width="12" stroke-linecap="round" opacity="0.68"/>
+  <path d="M120 236C214 188 316 170 416 192C520 216 620 204 730 154C856 98 974 84 1104 104" stroke="url(#a)" stroke-width="10" stroke-linecap="round" opacity="0.48"/>
+  <circle cx="168" cy="176" r="32" fill="#6BE4D1" fill-opacity="0.18"/>
+  <circle cx="374" cy="294" r="44" fill="#FFCC73" fill-opacity="0.18"/>
+  <circle cx="598" cy="404" r="52" fill="#FF8C7A" fill-opacity="0.14"/>
+  <circle cx="858" cy="260" r="38" fill="#6BE4D1" fill-opacity="0.16"/>
+  <circle cx="1032" cy="188" r="30" fill="#FFCC73" fill-opacity="0.16"/>
+  <rect x="142" y="86" width="116" height="18" rx="9" fill="url(#b)"/>
+  <rect x="300" y="112" width="180" height="14" rx="7" fill="url(#b)"/>
+  <rect x="534" y="80" width="148" height="14" rx="7" fill="url(#b)"/>
+  <rect x="736" y="128" width="210" height="14" rx="7" fill="url(#b)"/>
+  <rect x="188" y="604" width="240" height="16" rx="8" fill="url(#b)"/>
+  <rect x="520" y="620" width="180" height="14" rx="7" fill="url(#b)"/>
+  <rect x="818" y="590" width="164" height="14" rx="7" fill="url(#b)"/>
+</svg>

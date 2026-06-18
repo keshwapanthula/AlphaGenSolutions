@@ -1,0 +1,30 @@
+<svg width="720" height="720" viewBox="0 0 720 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="line" x1="0" y1="0" x2="720" y2="720" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="720" height="720" fill="transparent"/>
+  <path d="M0 72H720" stroke="url(#line)"/>
+  <path d="M0 144H720" stroke="url(#line)"/>
+  <path d="M0 216H720" stroke="url(#line)"/>
+  <path d="M0 288H720" stroke="url(#line)"/>
+  <path d="M0 360H720" stroke="url(#line)"/>
+  <path d="M0 432H720" stroke="url(#line)"/>
+  <path d="M0 504H720" stroke="url(#line)"/>
+  <path d="M0 576H720" stroke="url(#line)"/>
+  <path d="M0 648H720" stroke="url(#line)"/>
+  <path d="M72 0V720" stroke="url(#line)"/>
+  <path d="M144 0V720" stroke="url(#line)"/>
+  <path d="M216 0V720" stroke="url(#line)"/>
+  <path d="M288 0V720" stroke="url(#line)"/>
+  <path d="M360 0V720" stroke="url(#line)"/>
+  <path d="M432 0V720" stroke="url(#line)"/>
+  <path d="M504 0V720" stroke="url(#line)"/>
+  <path d="M576 0V720" stroke="url(#line)"/>
+  <path d="M648 0V720" stroke="url(#line)"/>
+  <circle cx="120" cy="120" r="36" stroke="white" stroke-opacity="0.05"/>
+  <circle cx="600" cy="192" r="52" stroke="white" stroke-opacity="0.04"/>
+  <circle cx="480" cy="560" r="84" stroke="white" stroke-opacity="0.04"/>
+</svg>
