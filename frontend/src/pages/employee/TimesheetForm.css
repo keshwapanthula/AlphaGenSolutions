@@ -1,0 +1,130 @@
+.ts-form-row {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-end;
+  margin-bottom: 0.75rem;
+}
+
+.ts-total {
+  display: flex;
+  flex-direction: column;
+}
+
+.ts-total-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.ts-total-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e40af;
+  line-height: 1;
+}
+
+.ts-section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+  margin: 1.25rem 0 0.75rem;
+}
+
+.ts-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ts-entry {
+  display: grid;
+  grid-template-columns: 140px 120px 1fr 80px auto;
+  gap: 0.75rem;
+  align-items: end;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+
+.ts-task { /* spans remaining cols */ }
+
+.ts-remove-btn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  transition: color 0.15s;
+  align-self: flex-end;
+  margin-bottom: 2px;
+}
+
+.ts-remove-btn:hover { color: #dc2626; }
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.form-group label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #1e293b;
+  background: #fff;
+  transition: border-color 0.15s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group input:disabled,
+.form-group textarea:disabled {
+  background: #f1f5f9;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.ts-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+@media (max-width: 768px) {
+  .ts-entry {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ts-task {
+    grid-column: 1 / -1;
+  }
+}
