@@ -2,6 +2,7 @@ import { useState } from 'react';
 import '../App.css';
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '') || '';
+const employeePortalUrl = import.meta.env.VITE_EMPLOYEE_PORTAL_URL || 'https://alphagenemployee.z21.web.core.windows.net/';
 
 export default function Home() {
   const [formData, setFormData] = useState({ name: '', email: '', company: '', message: '' });
@@ -52,7 +53,7 @@ export default function Home() {
             <li><a href="#services">Services</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
-            <li><a href="/login" className="btn btn-primary nav-portal-btn">Employee Portal</a></li>
+            <li><a href={employeePortalUrl} className="btn btn-primary nav-portal-btn">Employee Portal</a></li>
           </ul>
         </div>
       </nav>
