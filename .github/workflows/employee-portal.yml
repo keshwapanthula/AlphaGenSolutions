@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'alphagensolutions-website/employee-portal/**'
+      - 'employee-portal/**'
   workflow_dispatch:
 
 permissions:
@@ -17,7 +17,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: alphagensolutions-website/employee-portal
+        working-directory: employee-portal
 
     steps:
       - uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: alphagensolutions-website/employee-portal/package-lock.json
+          cache-dependency-path: employee-portal/package-lock.json
 
       - name: Install dependencies
         run: npm ci

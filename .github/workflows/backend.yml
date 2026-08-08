@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'alphagensolutions-website/backend/**'
+      - 'backend/**'
   workflow_dispatch:
 
 permissions:
@@ -17,7 +17,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: alphagensolutions-website/backend
+        working-directory: backend
 
     steps:
       - uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: alphagensolutions-website/backend/package-lock.json
+          cache-dependency-path: backend/package-lock.json
 
       - name: Install dependencies
         run: npm ci --omit=dev
@@ -35,7 +35,7 @@ jobs:
       - name: Create deployment package
         working-directory: ${{ github.workspace }}
         run: |
-          cd alphagensolutions-website/backend
+          cd backend
           zip -r ${{ github.workspace }}/backend-deploy.zip . \
             --exclude "*.git*" \
             --exclude "*test*" \

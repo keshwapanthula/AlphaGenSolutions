@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'alphagensolutions-website/frontend/**'
+      - 'frontend/**'
   workflow_dispatch:
 
 permissions:
@@ -17,7 +17,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: alphagensolutions-website/frontend
+        working-directory: frontend
 
     steps:
       - uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: alphagensolutions-website/frontend/package-lock.json
+          cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies
         run: npm ci
