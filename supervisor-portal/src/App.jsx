@@ -1,10 +1,10 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import { AuthProvider } from './context/AuthContext.jsx';
 import Login from './pages/Login.jsx';
 import PortalLayout from './pages/PortalLayout.jsx';
-import SupervisorDashboard from './pages/SupervisorDashboard.jsx';
 import ReviewTimesheet from './pages/ReviewTimesheet.jsx';
+import SupervisorDashboard from './pages/SupervisorDashboard.jsx';
 
 export default function App() {
   return (

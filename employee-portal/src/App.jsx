@@ -1,9 +1,9 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import { AuthProvider } from './context/AuthContext.jsx';
+import EmployeeDashboard from './pages/EmployeeDashboard.jsx';
 import Login from './pages/Login.jsx';
 import PortalLayout from './pages/PortalLayout.jsx';
-import EmployeeDashboard from './pages/EmployeeDashboard.jsx';
 import TimesheetForm from './pages/TimesheetForm.jsx';
 
 export default function App() {

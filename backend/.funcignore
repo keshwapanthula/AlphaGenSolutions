@@ -2,6 +2,9 @@
 .env
 .env.*
 node_modules/.cache
+*.ts
+tests/
+tsconfig.json
 *.test.js
 *.spec.js
 README.md
