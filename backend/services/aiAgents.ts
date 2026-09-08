@@ -15,12 +15,18 @@ interface ChatInput {
 
 interface ChatReply {
   agent: AgentDefinition;
-  provider: 'local-rules' | 'openai-compatible' | 'azure-openai';
+  provider: 'local-rules' | 'github-models' | 'openai-compatible' | 'azure-openai';
   reply: string;
   suggestions: string[];
+  attemptedProvider?: RemoteProvider;
+  fallbackReason?: string;
 }
 
 type RemoteProvider = Exclude<ChatReply['provider'], 'local-rules'>;
+type ChatApiProvider = 'openai-compatible' | 'azure-openai';
+type ProviderResult =
+  | Pick<ChatReply, 'provider' | 'reply' | 'suggestions'>
+  | Pick<ChatReply, 'attemptedProvider' | 'fallbackReason'>;
 
 const agentDefinitions: Record<AgentId, AgentDefinition> = {
   'site-concierge': {
@@ -75,24 +81,32 @@ const getSystemPrompt = (agent: AgentDefinition) => [
 ].join(' ');
 
 const getConfiguredProvider = () => {
-  const provider = process.env.AI_PROVIDER;
-  const endpoint = process.env.AI_ENDPOINT;
-  const model = process.env.AI_MODEL;
-  const apiKey = process.env.AI_API_KEY;
+  const provider = process.env.AI_PROVIDER as ChatReply['provider'] | undefined;
+  const endpoint = process.env.AI_ENDPOINT || (provider === 'github-models'
+    ? 'https://models.github.ai/inference/chat/completions'
+    : undefined);
+  const model = process.env.AI_MODEL || (provider === 'github-models' ? 'openai/gpt-4.1-mini' : undefined);
+  const apiKey = process.env.AI_API_KEY || (provider === 'github-models' ? process.env.GITHUB_TOKEN : undefined);
 
   if (!provider || provider === 'local-rules' || !endpoint || !model || !apiKey) return null;
-  if (provider !== 'openai-compatible' && provider !== 'azure-openai') return null;
+  if (provider !== 'github-models' && provider !== 'openai-compatible' && provider !== 'azure-openai') return null;
 
-  return { provider: provider as RemoteProvider, endpoint, model, apiKey };
+  return {
+    provider: provider as RemoteProvider,
+    chatApiProvider: (provider === 'azure-openai' ? 'azure-openai' : 'openai-compatible') as ChatApiProvider,
+    endpoint,
+    model,
+    apiKey
+  };
 };
 
-const chatWithConfiguredProvider = async (agent: AgentDefinition, message: string) => {
+const chatWithConfiguredProvider = async (agent: AgentDefinition, message: string): Promise<ProviderResult | null> => {
   const config = getConfiguredProvider();
   if (!config) return null;
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    ...(config.provider === 'azure-openai'
+    ...(config.chatApiProvider === 'azure-openai'
       ? { 'api-key': config.apiKey }
       : { Authorization: `Bearer ${config.apiKey}` })
   };
@@ -111,11 +125,21 @@ const chatWithConfiguredProvider = async (agent: AgentDefinition, message: strin
     })
   });
 
-  if (!response.ok) return null;
+  if (!response.ok) {
+    return {
+      attemptedProvider: config.provider,
+      fallbackReason: `Configured AI provider returned HTTP ${response.status}.`
+    };
+  }
 
   const data = await response.json() as { choices?: Array<{ message?: { content?: string } }> };
   const reply = data.choices?.[0]?.message?.content?.trim();
-  if (!reply) return null;
+  if (!reply) {
+    return {
+      attemptedProvider: config.provider,
+      fallbackReason: 'Configured AI provider returned an empty response.'
+    };
+  }
 
   return {
     provider: config.provider,
@@ -221,10 +245,17 @@ export const chatWithAgent = async ({ agentId, message }: ChatInput): Promise<Ch
 
   try {
     const providerReply = await chatWithConfiguredProvider(agent, message);
-    if (providerReply) {
+    if (providerReply && 'provider' in providerReply) {
       return {
         agent,
         ...providerReply
+      };
+    }
+    if (providerReply) {
+      return {
+        ...chatWithLocalRules({ agentId, message }),
+        attemptedProvider: providerReply.attemptedProvider,
+        fallbackReason: providerReply.fallbackReason
       };
     }
   } catch {

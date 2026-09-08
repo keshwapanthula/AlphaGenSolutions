@@ -65,6 +65,48 @@ describe('AI agents API', () => {
     );
   });
 
+  it('uses GitHub Models defaults when configured', async () => {
+    process.env.AI_PROVIDER = 'github-models';
+    process.env.GITHUB_TOKEN = 'test-token';
+
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve({ choices: [{ message: { content: 'GitHub Models answer' } }] })
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    const res = await request(app)
+      .post('/api/ai/chat')
+      .send({ agentId: 'site-concierge', message: 'Tell me about training' });
+
+    expect(res.status).toBe(200);
+    expect(res.body.provider).toBe('github-models');
+    expect(res.body.reply).toBe('GitHub Models answer');
+    expect(fetchMock).toHaveBeenCalledWith(
+      'https://models.github.ai/inference/chat/completions',
+      expect.objectContaining({
+        method: 'POST',
+        headers: expect.objectContaining({ Authorization: 'Bearer test-token' })
+      })
+    );
+  });
+
+  it('reports fallback when the configured provider is unavailable', async () => {
+    process.env.AI_PROVIDER = 'github-models';
+    process.env.GITHUB_TOKEN = 'test-token';
+
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 410 }));
+
+    const res = await request(app)
+      .post('/api/ai/chat')
+      .send({ agentId: 'site-concierge', message: 'Tell me about services' });
+
+    expect(res.status).toBe(200);
+    expect(res.body.provider).toBe('local-rules');
+    expect(res.body.attemptedProvider).toBe('github-models');
+    expect(res.body.fallbackReason).toContain('HTTP 410');
+  });
+
   it('validates unknown agents and empty messages', async () => {
     const res = await request(app)
       .post('/api/ai/chat')

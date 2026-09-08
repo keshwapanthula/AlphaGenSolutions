@@ -26,6 +26,11 @@ services:
       FRONTEND_URLS: http://localhost:5173,http://localhost:5174,http://localhost:5175
       JWT_SECRET: local_dev_only_jwt_secret_change_me_32chars
       JWT_REFRESH_SECRET: local_dev_only_refresh_secret_change_me
+      AI_PROVIDER: ${AI_PROVIDER:-local-rules}
+      AI_ENDPOINT: ${AI_ENDPOINT:-}
+      AI_MODEL: ${AI_MODEL:-}
+      AI_API_KEY: ${AI_API_KEY:-}
+      GITHUB_TOKEN: ${GITHUB_TOKEN:-}
     volumes:
       - ./backend:/app
       - backend-node-modules:/app/node_modules

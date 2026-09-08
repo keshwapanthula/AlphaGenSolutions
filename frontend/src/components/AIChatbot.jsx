@@ -36,6 +36,7 @@ export default function AIChatbot() {
   ]);
   const [input, setInput] = useState('');
   const [isSending, setIsSending] = useState(false);
+  const [provider, setProvider] = useState('local-rules');
 
   const selectedAgent = agents.find((agent) => agent.id === selectedAgentId) || agents[0];
 
@@ -47,6 +48,7 @@ export default function AIChatbot() {
         if (!ignore && Array.isArray(data.agents) && data.agents.length > 0) {
           setAgents(data.agents);
           setSelectedAgentId(data.agents[0].id);
+          setProvider(data.provider || 'local-rules');
         }
       })
       .catch(() => {
@@ -76,7 +78,7 @@ export default function AIChatbot() {
         ...current,
         {
           role: 'assistant',
-          text: data.reply,
+          text: data.fallbackReason ? `${data.reply}\n\n${data.fallbackReason}` : data.reply,
           suggestions: data.suggestions || []
         }
       ]);
@@ -126,7 +128,7 @@ export default function AIChatbot() {
                 <span>Active agent</span>
                 <strong>{selectedAgent.name}</strong>
               </div>
-              <span className="agent-status">Local ready</span>
+              <span className="agent-status">{provider === 'local-rules' ? 'Local ready' : provider}</span>
             </div>
 
             <div className="starter-prompts">
