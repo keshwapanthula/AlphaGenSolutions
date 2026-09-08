@@ -68,8 +68,17 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
+const aiLimiter = rateLimit({
+  windowMs: parseInt(process.env.AI_RATE_LIMIT_WINDOW_MS ?? '', 10) || 15 * 60 * 1000,
+  max: parseInt(process.env.AI_RATE_LIMIT_MAX_REQUESTS ?? '', 10) || 20,
+  message: 'Too many AI chat requests from this IP, please try again later.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // Apply rate limiting to contact and auth routes
 app.use('/api/contact', limiter);
+app.use('/api/ai/chat', aiLimiter);
 app.use('/api/auth/login', limiter);
 app.use('/api/auth/register', limiter);
 app.use('/api/auth/forgot-password', limiter);

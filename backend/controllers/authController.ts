@@ -137,8 +137,8 @@ export const refresh = async (req: Request, res: Response): Promise<void> => {
 
 // POST /api/auth/logout
 export const logout = (_req: Request, res: Response): void => {
-  res.clearCookie('token');
-  res.clearCookie('refreshToken', { path: REFRESH_COOKIE_PATH });
+  res.clearCookie('token', baseCookie());
+  res.clearCookie('refreshToken', { ...baseCookie(), path: REFRESH_COOKIE_PATH });
   res.json({ success: true, message: 'Logged out successfully' });
 };
 

@@ -1,5 +1,6 @@
 import express, { type NextFunction, type Request, type Response } from 'express';
 import mongoose from 'mongoose';
+import { protect, requireRole } from '../middleware/auth.js';
 import { handleValidationErrors, validateContact } from '../middleware/validation.js';
 import Contact from '../models/Contact.js';
 import { sendContactEmail } from '../utils/emailService.js';
@@ -62,7 +63,7 @@ router.post('/', validateContact, handleValidationErrors, async (req: Request, r
 });
 
 // GET /api/contact - Get all contacts (for admin use)
-router.get('/', async (req, res, next) => {
+router.get('/', protect, requireRole('admin'), async (req, res, next) => {
   try {
     if (mongoose.connection.readyState !== 1) {
       return res.status(503).json({
@@ -104,7 +105,7 @@ router.get('/', async (req, res, next) => {
 });
 
 // GET /api/contact/:id - Get single contact
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', protect, requireRole('admin'), async (req, res, next) => {
   try {
     if (mongoose.connection.readyState !== 1) {
       return res.status(503).json({
